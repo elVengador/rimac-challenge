@@ -1,0 +1,23 @@
+.header {
+    height: 56px;
+    // background-color: #f7f8fc;
+    padding: 0px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+    &--options {
+        display: flex;
+        align-items: center;
+        color: var(--blue);
+        font-family: "Roboto";
+        font-size: 14px;
+        img {
+            margin-right: 10px;
+        }
+    }
+}

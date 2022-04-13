@@ -1,0 +1,16 @@
+:root {
+  --red: #EF3340;
+  --blue: #6769FF;
+  --gray-titles: #494F66;
+  --gray-paragraph: #676F8F;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
