@@ -1,11 +1,12 @@
 import React from 'react'
+import './Button.scss'
 
 interface ButtonProps {
-    content: string
+    children: string
 }
 
-export const Button = ({ content }: ButtonProps) => {
+export const Button = ({ children }: ButtonProps) => {
     return (
-        <button>{content}</button>
+        <button className='button'>{children}</button>
     )
 }

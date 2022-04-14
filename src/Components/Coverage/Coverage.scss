@@ -1,0 +1,63 @@
+.coverage {
+    padding: 32px;
+    .coverage-wrapper {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        border-bottom: solid 1px #e4e8f7;
+    }
+    &--icon {
+        width: 40px;
+        height: 40px;
+        background-image: url("/stolen-wheel.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    &--title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h1 {
+            font-family: "Lato";
+            font-weight: 400;
+            font-size: 16px;
+            color: #494f66;
+        }
+    }
+    &--content {
+        font-family: "Roboto";
+        font-size: 14px;
+        line-height: 24px;
+        color: #676f8f;
+    }
+    .action {
+        padding: 16px 0px;
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+        color: #6f7dff;
+        font-family: "Lato";
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        .icon {
+            width: 16px;
+            height: 16px;
+            background-image: url("./down-arrow-icon.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    }
+    .hide-action {
+        .icon {
+            background-image: url("./down-arrow-icon.svg");
+        }
+    }
+    .show-action {
+        color: #a3abcc;
+        .icon {
+            background-image: url("./up-arrow-icon.svg");
+        }
+    }
+}
