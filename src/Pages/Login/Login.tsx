@@ -1,8 +1,64 @@
-import React from 'react'
-import { Button } from '../../Components/Button/Button'
+import React, { useState } from 'react'
+import { LoginForm } from '../../Components/FormLogin/LoginForm'
 import './Login.scss'
 
+interface userInformation {
+    name: string,
+    plateCar: string,
+    modelCar: string,
+    insuredAmount: string
+}
+
+interface User {
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+}
+
+interface Car {
+    plateCar: string,
+    modelCar: string
+}
+
 export const Login = () => {
+
+    const getUserInformation = async (dni: string): Promise<User> => {
+        const res = await fetch('https://jsonplaceholder.typicode.com/users/1')
+        return await res.json()
+    }
+
+    const getCarInformation = async (plateCar: string): Promise<Car> => {
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+        const data = await res.json()
+        // here process data to get car data
+        // we will mock carInfo to simulate the response
+        const carInfoMock: Car = { plateCar, modelCar: 'Wolkswagen 2019 Golf' }
+        return carInfoMock
+    }
+
+    const saveUserInLocal = ({ name, plateCar, modelCar, insuredAmount }: userInformation) => {
+        localStorage.setItem('name', name)
+        localStorage.setItem('plateCar', plateCar)
+        localStorage.setItem('modelCar', modelCar)
+        localStorage.setItem('insuredAmount', insuredAmount)
+    }
+
+    const onSubmit = async (dni: string, plateCar: string) => {
+        try {
+            const userInformation: User = await getUserInformation(dni)
+            const carInformation: Car = await getCarInformation(plateCar)
+            saveUserInLocal({
+                name: userInformation.name,
+                plateCar,
+                modelCar: carInformation.plateCar,
+                insuredAmount: '0'
+            })
+        } catch (err) {
+            // manage error showing message to user
+        }
+    }
+
     return (
         <main className="login">
             <div className="login--background"></div>
@@ -13,24 +69,8 @@ export const Login = () => {
                     <p className='normal-text'>Cuentanos donde le haras seguimiento a tu seguro</p>
                 </div>
             </div>
-            <form className="login--form">
-                <h3 className='title-form'>Déjanos tus datos</h3>
-                <div className="group-input">
-                    <select name="" id="" className='dni'>
-                        <option value="">DNI</option>
-                    </select>
-                    <input type="text" className='document-number' placeholder='Nro. de doc' />
-                </div>
-                <input type="text" className='phone-number' placeholder='Celular' />
-                <input type="text" className='license-plate' placeholder='Placa' />
-                <div className="terms">
-                    <div className='terms--check'></div>
-                    <span>
-                        Acepto la <a href="">Política de Protecciòn de Datos Personales</a> y los <a href="">Términos y Condiciones.</a>
-                    </span>
-                </div>
-                <Button children='cotízalo' size='lg' />
-            </form>
+
+            <LoginForm onSubmit={onSubmit} />
         </main>
     )
 }
