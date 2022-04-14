@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSwitch } from '../Switch/useSwitch'
 
 import './Coverage.scss'
@@ -7,12 +7,18 @@ interface CoverageProps {
     icon: string,
     title: string,
     content: string,
-    state?: boolean
+    accepted: boolean,
+    initialShowContent?: boolean
 }
 
-export const Coverage = ({ icon, title, content, state = false }: CoverageProps) => {
-    const [showContent, setShowContent] = useState(state)
-    const { SwitchComponent, active, toggleSwitch } = useSwitch()
+export const Coverage = ({ icon, title, content, accepted, initialShowContent = false }: CoverageProps) => {
+    const [showContent, setShowContent] = useState(initialShowContent)
+    const { SwitchComponent, active, toggleSwitch } = useSwitch(accepted)
+
+    useEffect(() => {
+
+    }, [active])
+
     return (
         <article className="coverage">
             <div className="coverage-wrapper">

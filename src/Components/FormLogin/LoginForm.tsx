@@ -3,9 +3,16 @@ import React, { useState } from 'react'
 import './LoginForm.scss'
 import { Button } from '../Button/Button'
 
+export interface LoginFormValues {
+    typeDocument: string,
+    documentNumber: string,
+    phoneNumber: string,
+    licensePlate: string,
+    acceptTerms: boolean,
+}
 
 interface LoginProps {
-    onSubmit: () => void
+    onSubmit: (values: LoginFormValues) => void
 }
 
 export const LoginForm = ({ ...props }: LoginProps) => {
@@ -40,7 +47,7 @@ export const LoginForm = ({ ...props }: LoginProps) => {
     const onSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         if (!typeDocument || !documentNumber || !phoneNumber || !licensePlate || !acceptTerms) { return alert('Hay campos invalidos') }
-        props.onSubmit()
+        props.onSubmit({ typeDocument, documentNumber, phoneNumber, licensePlate, acceptTerms })
     }
 
     return (

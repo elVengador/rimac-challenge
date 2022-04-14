@@ -1,13 +1,8 @@
 import React, { useState } from 'react'
-import { LoginForm } from '../../Components/FormLogin/LoginForm'
+import { useNavigate } from 'react-router-dom'
+import { LoginForm, LoginFormValues } from '../../Components/FormLogin/LoginForm'
+import { userInformation } from '../../interfaces'
 import './Login.scss'
-
-interface userInformation {
-    name: string,
-    plateCar: string,
-    modelCar: string,
-    insuredAmount: string
-}
 
 interface User {
     id: string,
@@ -22,6 +17,8 @@ interface Car {
 }
 
 export const Login = () => {
+
+    const navigate = useNavigate()
 
     const getUserInformation = async (dni: string): Promise<User> => {
         const res = await fetch('https://jsonplaceholder.typicode.com/users/1')
@@ -44,16 +41,17 @@ export const Login = () => {
         localStorage.setItem('insuredAmount', insuredAmount)
     }
 
-    const onSubmit = async (dni: string, plateCar: string) => {
+    const onSubmit = async ({ documentNumber, licensePlate }: LoginFormValues) => {
         try {
-            const userInformation: User = await getUserInformation(dni)
-            const carInformation: Car = await getCarInformation(plateCar)
+            const userInformation: User = await getUserInformation(documentNumber)
+            const carInformation: Car = await getCarInformation(licensePlate)
             saveUserInLocal({
                 name: userInformation.name,
-                plateCar,
-                modelCar: carInformation.plateCar,
+                plateCar: licensePlate,
+                modelCar: carInformation.modelCar,
                 insuredAmount: '0'
             })
+            navigate('/arma-tu-plan')
         } catch (err) {
             // manage error showing message to user
         }
