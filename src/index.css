@@ -1,12 +1,26 @@
 :root {
-  --red: #EF3340;
-  --blue: #6769FF;
+  --primary: #EF3340;
+  --secondary: #6769FF;
+  --terciary: #7CC954;
   --gray-titles: #494F66;
   --gray-paragraph: #676F8F;
+  --gray-extra: #A3ABCC
 }
 
 * {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+}
+
+.primary {
+  color: var(--primary)
+}
+
+.secondary {
+  color: var(--secondary);
+}
+
+.terciary {
+  color: var(--terciary);
 }

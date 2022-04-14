@@ -1,6 +1,5 @@
 .header {
     height: 56px;
-    // background-color: #f7f8fc;
     padding: 0px 32px;
     display: flex;
     justify-content: space-between;
@@ -13,7 +12,7 @@
     &--options {
         display: flex;
         align-items: center;
-        color: var(--blue);
+        color: var(--secondary);
         font-family: "Roboto";
         font-size: 14px;
         img {

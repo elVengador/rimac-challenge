@@ -1,21 +1,17 @@
 .login {
-    // padding-left: 32px;
     &--background {
         width: 120px;
         height: 330px;
-        // border: dashed 1px red;
         position: absolute;
         top: 40px;
         right: 0px;
         background-image: url("/login-background.svg");
         background-repeat: no-repeat;
         background-size: contain;
-        // background-position: 250px 70px;
         background-position: center;
         z-index: 20;
     }
     &--message {
-        // border: solid 2px royalblue;
         height: 308px;
         padding: 0px 32px;
         display: flex;
@@ -46,13 +42,9 @@
             font-family: "Roboto";
             line-height: 24px;
         }
-        .red {
-            color: var(--red);
-        }
     }
     &--form {
         padding: 16px 32px;
-        // border: dashed 2px red;
         display: grid;
         row-gap: 16px;
         select {
@@ -60,6 +52,7 @@
             padding: 15px 16px;
             border-radius: 4px;
             border: solid 1px #c5cbe0;
+            background-color: #fff;
             font-size: 16px;
         }
         input {
@@ -94,7 +87,12 @@
             color: var(--gray-paragraph);
             font-size: 12px;
             font-family: "Roboto";
+            font-weight: 300;
             line-height: 20px;
+            a {
+                color: var(--gray-paragraph);
+                font-weight: 500;
+            }
             &--check {
                 width: 20px;
                 height: 20px;
@@ -107,17 +105,6 @@
                 background-repeat: no-repeat;
                 border-radius: 4px;
             }
-        }
-        .button {
-            padding: 20px 32px;
-            background-color: var(--red);
-            border-radius: 8px;
-            border: none;
-            color: #fff;
-            font-family: "Lato";
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
         }
     }
 }

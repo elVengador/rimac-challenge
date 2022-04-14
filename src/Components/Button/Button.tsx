@@ -3,10 +3,11 @@ import './Button.scss'
 
 interface ButtonProps {
     children: string
+    size?: 'md' | 'lg'
 }
 
-export const Button = ({ children }: ButtonProps) => {
+export const Button = ({ children, size = 'md' }: ButtonProps) => {
     return (
-        <button className='button'>{children}</button>
+        <button className={`button button-${size}`}>{children}</button>
     )
 }

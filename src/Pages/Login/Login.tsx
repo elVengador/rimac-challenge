@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from '../../Components/Button/Button'
 import './Login.scss'
 
 export const Login = () => {
@@ -8,7 +9,7 @@ export const Login = () => {
             <div className="login--message">
                 <div className="message-wrapper">
                     <p className='small-text'>¡NUEVO!</p>
-                    <h1 className='big-text'>Seguro Vehicular <span className='red'>Tracking</span></h1>
+                    <h1 className='big-text'>Seguro Vehicular <span className='primary'>Tracking</span></h1>
                     <p className='normal-text'>Cuentanos donde le haras seguimiento a tu seguro</p>
                 </div>
             </div>
@@ -28,7 +29,7 @@ export const Login = () => {
                         Acepto la <a href="">Política de Protecciòn de Datos Personales</a> y los <a href="">Términos y Condiciones.</a>
                     </span>
                 </div>
-                <button className='button'>cotízalo</button>
+                <Button children='cotízalo' size='lg' />
             </form>
         </main>
     )
