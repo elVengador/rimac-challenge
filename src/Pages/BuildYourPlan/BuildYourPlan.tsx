@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import InputMask from 'react-input-mask';
-
 
 import './BuildYourPlan.scss'
-import { ButtonIcon } from '../../Components/Button-Icon/ButtonIcon'
 import { Button } from '../../Components/Button/Button'
 import { Coverage } from '../../Components/Coverage/Coverage'
-import { UserInformation, useUserInformation } from '../../Hooks/useUserInformation'
-import { coverageCar } from './BuildYourPlan.model'
+import { useUserInformation } from '../../Hooks/useUserInformation'
+import { Switch } from '../../Components/Switch/Switch';
+import { useCoverageInformation } from '../../Hooks/useCoverageInformation';
+import { UserInformation } from '../../Components/UserInformation/UserInformation'
+import { SumAssuredControl } from '../../Components/SumAssuredControl/SumAssuredControl'
+import { Stepper } from '../../Components/Stepper/Stepper'
 
 export const BuildYourPlan = () => {
-    const RE_DOLLAR_OR_COMMAS = /\$|,|_/gm
     const navigate = useNavigate()
     const { userInformationState, dispatch } = useUserInformation()
+    const { coverageState, coverageDispatch } = useCoverageInformation()
 
     const onDecrementInsuredAmount = () => {
         if (Number(userInformationState.insuredAmount) <= 12500) { return }
@@ -23,96 +24,79 @@ export const BuildYourPlan = () => {
     }
 
     const onIncrementInsuredAmount = () => {
-        if (Number(userInformationState.insuredAmount) > 16500) { return }
+        if (Number(userInformationState.insuredAmount) >= 16500) { return }
 
         const newAmount = Number(userInformationState.insuredAmount) + 100
         dispatch({ type: 'UPDATE_INSURED_AMOUNT', payload: newAmount.toString() })
     }
 
-    const onChangeInsuredAmount = (value: string) => {
-        dispatch({ type: 'UPDATE_INSURED_AMOUNT', payload: value })
-    }
-
     const coverageCarFilter = () => {
-        if (Number(userInformationState.insuredAmount) > 16000) { return coverageCar }
-        return coverageCar.filter(cur => cur.title !== 'Choque y/o pasarte la luz roja')
+        if (Number(userInformationState.insuredAmount) <= 16000) { return coverageState }
+        return coverageState.filter(cur => cur.title !== 'Choque y/o pasarte la luz roja')
     }
 
-    // const getTotalCoverage = () => {
-    //     const coverageBase = 20
-    //     coverageCarFilter().reduce((acu, cur) =>
-    //     if (cur.state)
-    //     , 0)
+    const getTotalCoverage = () => {
+        const coverageBase = 20
+        const coverageAmount = coverageCarFilter().reduce((acu, cur) => cur.accepted ? acu + cur.amount : acu, 0)
+        return coverageBase + coverageAmount
 
-    // }
+    }
 
+    const saveTotalCost = (total: number) => {
+        const insuredAmount = Number(userInformationState.insuredAmount)
+        if (insuredAmount < 12500 || insuredAmount > 16500) { return alert('La Suma asegurada es invalida!!, deve ser >= a 12500 y <= a 16500') }
+        localStorage.setItem('totalCost', total.toString())
+        navigate('/pagina-gracias')
+    }
 
     return (
         <div className="build-plan">
-            <div className="stepper">
-                <div className="stepper--back" onClick={() => navigate('/home')}></div>
-                <span className='stepper--info'>Paso 2 de 2</span>
-                <div className="stepper--bar"></div>
-            </div>
+            <Stepper
+                currentStep={2}
+                totalSteps={2}
+                onBackOption={() => navigate('/home')}
+            />
 
-            <div className="user-information">
-                <h1>Mira las coberturas</h1>
-                <p>Conoce las coberturas para tu plan</p>
-                <article className="card">
-                    <h1>{userInformationState.name}</h1>
-                    <p>{userInformationState.modelCar}</p>
-                    <div className="card--effect"></div>
-                </article>
-            </div>
+            <UserInformation
+                plateCar={userInformationState.plateCar}
+                modelCar={userInformationState.modelCar}
+            />
 
-            <div className="amount">
-                <h3>Indica la suma asegurada</h3>
-                <div className='interval'>
-                    <span>MIN $12.500</span>
-                    <span>|</span>
-                    <span>MAX $16,500</span>
-                </div>
-                <div className="amount--options">
-                    <ButtonIcon icon='/minus-icon.svg' onClick={onDecrementInsuredAmount} />
-                    <InputMask
-                        mask="$ 99,999"
-                        // maskChar=" "
-                        value={userInformationState.insuredAmount}
-                        onChange={e => onChangeInsuredAmount(e.currentTarget.value.replaceAll(RE_DOLLAR_OR_COMMAS, ''))}
-                        style={{ fontWeight: '400', color: '#494F66' }}
-                    />
-                    {/* <input type="number" value={userInformationState.insuredAmount} onChange={e => onChangeInsuredAmount(e.currentTarget.value)} /> */}
-                    <ButtonIcon icon='/plus-icon.svg' onClick={onIncrementInsuredAmount} />
-                </div>
-            </div>
+            <SumAssuredControl
+                insuredAmount={Number(userInformationState.insuredAmount)}
+                onDecrement={onDecrementInsuredAmount} onIncrement={onIncrementInsuredAmount}
+            />
 
             <div className="options">
                 <h2 className='options--subtitle'>Agrega o quita coberturas</h2>
                 <nav className='options--navigation'>
                     <ul>
                         <li className='active'>Protege a tu auto</li>
-                        <li>Protege a los que te rodeaN</li>
-                        <li>mejora tu plAN</li>
+                        <li>Protege a los que te rodean</li>
+                        <li>mejora tu plan</li>
                     </ul>
                 </nav>
                 {
-                    coverageCarFilter().map((cur, idx) => <Coverage
-                        icon={cur.icon}
-                        title={cur.title}
-                        content={cur.content}
-                        initialShowContent={cur.state}
-                        accepted={true}
-                        key={idx}
-                    />)
+                    coverageCarFilter().map((cur, idx) => {
+                        const toggle = () => coverageDispatch({ type: 'UPDATE_ACCEPT_COVERAGE', payload: { title: cur.title, value: !cur.accepted } })
+                        return <Coverage
+                            icon={cur.icon}
+                            title={cur.title}
+                            content={cur.content}
+                            initialShowContent={cur.showContent}
+                            key={idx}
+                            options={<Switch state={cur.accepted} toggle={toggle} />}
+                        />
+                    })
                 }
                 <div className="options--footer">
                     <div className='total'>
-                        <p className='total--amount'>$35.00</p>
+                        <p className='total--amount'>${getTotalCoverage()}</p>
                         <p className='total--time'>MENSUAL</p>
                     </div>
-                    <Button onClick={() => console.log('lo quiero')}>lo quiero</Button>
+                    <Button onClick={() => saveTotalCost(getTotalCoverage())}>lo quiero</Button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

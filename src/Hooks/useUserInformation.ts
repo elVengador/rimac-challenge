@@ -4,7 +4,8 @@ export interface UserInformation {
     name: string,
     plateCar: string,
     modelCar: string,
-    insuredAmount: string
+    insuredAmount: string,
+    totalCost: string
 }
 
 interface Action {
@@ -18,7 +19,9 @@ export const useUserInformation = () => {
         name: localStorage.getItem('name') || '',
         plateCar: localStorage.getItem('plateCar') || '',
         modelCar: localStorage.getItem('modelCar') || '',
-        insuredAmount: localStorage.getItem('insuredAmount') || '0',
+        // insuredAmount: '12500',
+        insuredAmount: localStorage.getItem('insuredAmount') || '12500',
+        totalCost: localStorage.getItem('totalCost') || '0',
     }
 
     const reducer = (state: UserInformation, action: Action) => {

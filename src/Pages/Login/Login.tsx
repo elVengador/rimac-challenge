@@ -49,7 +49,7 @@ export const Login = () => {
                 name: userInformation.name,
                 plateCar: licensePlate,
                 modelCar: carInformation.modelCar,
-                insuredAmount: '0'
+                insuredAmount: '12500'
             })
             navigate('/arma-tu-plan')
         } catch (err) {

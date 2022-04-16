@@ -1,27 +1,38 @@
-import React from 'react'
+import React, { useReducer } from 'react'
 import { Coverage, coverageCar } from '../Pages/BuildYourPlan/BuildYourPlan.model'
-
-export interface CoverageInformation {
-    coverage: Coverage[]
-}
 
 interface Action {
     type: 'UPDATE_SHOW_CONTENT' | 'UPDATE_ACCEPT_COVERAGE',
-    payload: { coverageType: 'COVERAGE_CAR', value: boolean }
+    payload: { title: string, value: boolean }
 }
 
 export const useCoverageInformation = () => {
-    const initialState: CoverageInformation = {
-        coverage: coverageCar
-    }
+    const initialState: Coverage[] = coverageCar
 
-    const reducer = (state: CoverageInformation, action: Action) => {
+    const reducer = (state: Coverage[], action: Action) => {
         switch (action.type) {
-            case 'UPDATE_ACCEPT_COVERAGE'
+            case 'UPDATE_ACCEPT_COVERAGE':
+                return state.map(cur => {
+                    if (cur.title !== action.payload.title) { return cur }
+                    const coverageToUpdate = { ...cur }
+                    coverageToUpdate.accepted = action.payload.value
+                    return coverageToUpdate
+                })
 
-                return { ...state, }
+
+            case 'UPDATE_SHOW_CONTENT':
+                return state.map(cur => {
+                    if (cur.title !== action.payload.title) { return cur }
+                    const coverageToUpdate = { ...cur }
+                    coverageToUpdate.showContent = action.payload.value
+                    return coverageToUpdate
+                })
+            default:
+                return state
         }
     }
 
-    return {}
+    const [coverageState, coverageDispatch] = useReducer(reducer, initialState)
+
+    return { coverageState, coverageDispatch }
 }

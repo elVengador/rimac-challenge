@@ -3,9 +3,15 @@ import React from 'react'
 import './Thanks.scss'
 
 import { Button } from '../../Components/Button/Button'
+import { useNavigate } from 'react-router-dom'
 
 
 export const Thanks = () => {
+    const navigate = useNavigate()
+    const totalCost = localStorage.getItem('totalCost')
+
+    if (!totalCost) { navigate('/home') }
+
     return (
         <div className='thanks'>
             <div className="thanks--cover-image">
@@ -19,8 +25,9 @@ export const Thanks = () => {
                     Enviaremos la confirmación de compra de tu Plan Vehícular Tracking a tu correo:
                     <span className='email'> joel.sanchez@gmail.com</span>
                 </p>
+                <p className='total-cost'>Mensual: ${Number(totalCost).toLocaleString('en-US')}</p>
                 <div className="actions">
-                    <Button children='cómo usar mi seguro' size='lg' />
+                    <Button children='cómo usar mi seguro' size='lg' onClick={() => { console.log('navigate to some tutorial') }} />
                 </div>
             </div>
             <div className="thanks--footer">

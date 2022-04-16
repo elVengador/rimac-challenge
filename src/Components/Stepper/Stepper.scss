@@ -1,0 +1,30 @@
+.stepper {
+    display: flex;
+    padding: 12px 32px;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e4e8f7;
+    &--back {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: solid 1px #f0f2fa;
+        background-image: url("/left-arrow-icon.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    &--info {
+        color: var(--gray-paragraph);
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 10px;
+        font-family: "Lato";
+        letter-spacing: 0.8px;
+    }
+    &--bar {
+        width: 176px;
+        height: 6px;
+        border-radius: 20px;
+        background-color: var(--secondary);
+    }
+}

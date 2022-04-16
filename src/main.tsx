@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Header } from './Components/Header'
+import { Header } from './Components/Header/Header'
 
 import './index.css'
 import { BuildYourPlan } from './Pages/BuildYourPlan/BuildYourPlan'
