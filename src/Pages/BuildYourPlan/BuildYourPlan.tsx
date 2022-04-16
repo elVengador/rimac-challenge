@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import './BuildYourPlan.scss'
@@ -15,6 +15,10 @@ export const BuildYourPlan = () => {
     const navigate = useNavigate()
     const { userInformationState, dispatch } = useUserInformation()
     const { coverageState, coverageDispatch } = useCoverageInformation()
+
+    useEffect(() => {
+        if (!userInformationState.plateCar || !userInformationState.modelCar || !userInformationState.name) { navigate('/home') }
+    }, [userInformationState.plateCar, userInformationState.modelCar, userInformationState.name])
 
     const onDecrementInsuredAmount = () => {
         if (Number(userInformationState.insuredAmount) <= 12500) { return }

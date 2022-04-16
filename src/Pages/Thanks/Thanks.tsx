@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import './Thanks.scss'
 
@@ -9,8 +9,11 @@ import { useNavigate } from 'react-router-dom'
 export const Thanks = () => {
     const navigate = useNavigate()
     const totalCost = localStorage.getItem('totalCost')
+    console.log('total', totalCost)
 
-    if (!totalCost) { navigate('/home') }
+    useEffect(() => {
+        if (!totalCost) { navigate('/home') }
+    }, [totalCost])
 
     return (
         <div className='thanks'>

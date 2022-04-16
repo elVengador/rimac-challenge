@@ -36,7 +36,7 @@ export const LoginForm = ({ ...props }: LoginProps) => {
 
     const licensePlateIsInvalid = () => {
         if (!licensePlate) { return false }
-        const LICENSE_PLATE_VALIDATOR = /^[A-Z]{3}-[0-9]{3}$/gm
+        const LICENSE_PLATE_VALIDATOR = /^[A-Z]{1}[A-Z0-9]{2}-[0-9]{3}$/gm
         return !LICENSE_PLATE_VALIDATOR.test(licensePlate)
     }
 
@@ -67,7 +67,10 @@ export const LoginForm = ({ ...props }: LoginProps) => {
                     className={`document-number ${documentNumberIsValid() ? 'error' : ''}`}
                     value={documentNumber}
                     onChange={e => onChangeDocumentNumber(e.currentTarget.value)}
-                    placeholder='Nro. de doc' />
+                    placeholder='Nro. de doc'
+                    minLength={8}
+                    maxLength={8}
+                />
             </div>
 
             <input
@@ -75,14 +78,20 @@ export const LoginForm = ({ ...props }: LoginProps) => {
                 className={`phone-number ${phoneNumberIsInvalid() ? 'error' : ''}`}
                 value={phoneNumber}
                 onChange={e => setPhoneNumber(e.currentTarget.value)}
-                placeholder='Celular' />
+                placeholder='Celular'
+                minLength={9}
+                maxLength={9}
+            />
 
             <input
                 type="text"
                 className={`license-plate ${licensePlateIsInvalid() ? 'error' : ''}`}
                 value={licensePlate}
                 onChange={e => setLicensePlate(e.currentTarget.value.toUpperCase())}
-                placeholder='Placa' />
+                placeholder='Placa'
+                minLength={7}
+                maxLength={7}
+            />
 
             <div className="terms">
                 <div
