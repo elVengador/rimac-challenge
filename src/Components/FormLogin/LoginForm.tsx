@@ -46,7 +46,9 @@ export const LoginForm = ({ ...props }: LoginProps) => {
 
     const onSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        if (!typeDocument || !documentNumber || !phoneNumber || !licensePlate || !acceptTerms) { return alert('Hay campos invalidos') }
+        if (!typeDocument || documentNumberIsValid() || phoneNumberIsInvalid()) { return alert('Hay campos invalidos') }
+        if (licensePlateIsInvalid()) { return alert('Formato de la placa es invalido AXX-NNN, donde A: letra, X: alfanúmerico, N: número') }
+        if (!acceptTerms) { return alert('Acepte los terminos y condiciones para continuar') }
         props.onSubmit({ typeDocument, documentNumber, phoneNumber, licensePlate, acceptTerms })
     }
 

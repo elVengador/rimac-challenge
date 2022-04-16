@@ -1,0 +1,15 @@
+.not-found {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 56px);
+    &--message {
+        padding: 10px;
+        text-align: center;
+        color: var(--gray-titles);
+        font-family: "Lato";
+        font-weight: 700;
+    }
+}

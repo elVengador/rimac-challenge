@@ -6,6 +6,7 @@ import { Header } from './Components/Header/Header'
 import './index.css'
 import { BuildYourPlan } from './Pages/BuildYourPlan/BuildYourPlan'
 import { Login } from './Pages/Login/Login'
+import { NotFound } from './Pages/NotFound/NotFound'
 import { Thanks } from './Pages/Thanks/Thanks'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="home" element={<Login />} />
           <Route path="arma-tu-plan" element={<BuildYourPlan />}></Route>
           <Route path="pagina-gracias" element={<Thanks />}></Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
 
